@@ -1,0 +1,32 @@
+const mongoose=require('mongoose');
+const ticketSchema=new mongoose.Schema({
+    MuseumId:{
+        type:String,
+        require:true
+    },
+    museumName:{
+    type:String,
+    require:true
+    },
+    time:{
+        type:String,
+        require:true
+    },
+    paymentId:{
+        type:String,
+        require:true
+    },
+    date:{
+        type:Date,
+        require:true
+    },
+    day:{
+    type:String,
+    require:true
+    },
+    qrcode:{
+    type:String,
+    //require:true
+    }
+})
+module.exports=mongoose.model("ticket",ticketSchema)
