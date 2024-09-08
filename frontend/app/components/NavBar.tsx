@@ -11,8 +11,8 @@ const NavBar = () => {
   return (
     <>
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold text-primary">
-          MuseumTix
+        <Link href="/" className="text-2xl font-bold text-inherit">
+          TicketEase
         </Link>
         <nav className="hidden md:flex space-x-8">
           <Link
