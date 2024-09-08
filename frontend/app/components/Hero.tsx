@@ -133,7 +133,7 @@ export default function LandingPage() {
           isChatOpen ? "scale-100" : "scale-0"
         }`}
       >
-        <div className="flex justify-between items-center bg-black bg-opacity-80 text-white p-4 rounded-t-lg">
+        <div className="flex justify-between items-center bg-black bg-opacity-90 text-white p-4 rounded-t-lg">
           <h3 className="font-semibold">TicketEase Chat</h3>
           <button onClick={() => setIsChatOpen(false)} className="text-white">
             <X className="w-5 h-5" />

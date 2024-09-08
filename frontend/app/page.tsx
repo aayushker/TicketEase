@@ -5,7 +5,7 @@ import Footer from "@/app/components/Footer";
 
 export default function Home() {
   return (
-    <div className="">
+    <div className="min-h-screen flex flex-col">
       <header className="bg-white shadow-md">
         <NavBar />
       </header>
