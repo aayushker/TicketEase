@@ -4,7 +4,6 @@ import Image from "next/image";
 import { QRCodeSVG } from "qrcode.react";
 import { Button } from "@/app/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/app/components/ui/card";
-import { Ticket } from "lucide-react";
 
 // we have to add the following props to the TicketComponent component: museumName, address, date, time, ticketCount, and ticketCode. 
 // The TicketComponent component will display a ticket with the museum name, address, date, time, ticket count, and ticket code. 
@@ -12,6 +11,7 @@ import { Ticket } from "lucide-react";
 // The CardFooter will have a Button component that will allow the user to download the ticket as a PDF. 
 // The TicketComponent component will be used in the Home component to display the ticket.
 // Format of the TicketComponent component: <TicketComponent museumName="Delhi Museum" address="New Delhi" date="26 Aug, 2004" ticketCode="b4h54h4" ticketCount={4} time="13:33" />
+// download ticket is not working!
 
 interface TicketProps {
   museumName: string;
