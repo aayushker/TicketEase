@@ -1,7 +1,8 @@
 import React from "react";
-import LandingPage from "@/app/components/Hero";
+import LandingPage from "@/app/sections/Landing/Hero";
 import NavBar from "@/app/components/NavBar";
 import Footer from "@/app/components/Footer";
+import "@/app/globals.css";
 
 export default function Home() {
   return (
