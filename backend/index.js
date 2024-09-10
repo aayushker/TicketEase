@@ -5,8 +5,10 @@ const User = require('./models/user');
 const Ticket = require('./models/ticket');
 const dataset = require('./models/dataset');
 const app = express();
+const cors = require("cors");
 
 app.use(express.json());
+app.use(cors());
 
 //putting data of users on the database
 app.post("/login", async (req, resp) => {
