@@ -26,7 +26,7 @@ const ListMuseums = () => {
       try {
         const museums = await getMuseums();
         console.log("Museums successfully fetched");
-        setMuseums(museums || []);
+        setMuseums(museums.slice(0, 20) || []);
       } catch (error) {
         console.error("Error fetching museums", error);
       }
@@ -45,7 +45,7 @@ const ListMuseums = () => {
         ) : (
           <>
             {museum.map((museum) => (
-              <Card className="py-4 max-w-sm" key={museum.Number}>
+              <Card className="flex align-middle justify-center py-4 max-w-sm" key={museum.Number}>
                 <div className="flex justify-between align-middle">
                   <div>
                     <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
@@ -62,7 +62,7 @@ const ListMuseums = () => {
                   </div>
                 </div>
 
-                <CardBody className="overflow-visible py-2">
+                <CardBody className="overflow-visible py-2 flex align-middle justify-center">
                   {/* {museum.urlToImage && (
          <Image
            alt={museum.title || "News image"}
@@ -74,7 +74,7 @@ const ListMuseums = () => {
                   <Image
                     src="/images/heroImage1.jpeg"
                     alt="hero"
-                    width={270}
+                    // width={270}
                     className="object-cover rounded-xl"
                   />
                 </CardBody>
@@ -94,7 +94,8 @@ const ListMuseums = () => {
       <style jsx>{`
         .grid-container {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          grid-template-columns: repeat(5, 1fr); 
+          grid-template-rows: repeat(4, auto);
           gap: 16px;
         }
       `}</style>

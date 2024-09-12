@@ -14,12 +14,14 @@ import { Card, CardContent, CardFooter } from "@/app/components/ui/card";
 // download ticket is not working!
 
 interface TicketProps {
+  museumId: string;
   museumName: string;
   address: string;
-  date: string;
-  time: string;
+  date: Date;
+  time: TimerHandler;
   ticketCount: number;
   ticketCode: string;
+  paymentId?: string;252
 }
 
 export default function TicketComponent({
