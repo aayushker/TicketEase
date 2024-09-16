@@ -9,13 +9,7 @@ import {
   Button,
   Link,
 } from "@nextui-org/react";
-
-interface Museum {
-  Number: number;
-  Name: string;
-  CityTown: string;
-  StateTerritory: string;
-}
+import { Museum } from "@/app/types/Museum";
 
 const ListMuseums = () => {
   const [museum, setMuseums] = React.useState<Museum[]>([]);
@@ -45,7 +39,7 @@ const ListMuseums = () => {
         ) : (
           <>
             {museum.map((museum) => (
-              <Card className="flex align-middle justify-center py-4 max-w-sm" key={museum.Number}>
+              <Card className="flex align-middle justify-center py-4 max-w-sm">
                 <div className="flex justify-between align-middle">
                   <div>
                     <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
@@ -94,7 +88,7 @@ const ListMuseums = () => {
       <style jsx>{`
         .grid-container {
           display: grid;
-          grid-template-columns: repeat(5, 1fr); 
+          grid-template-columns: repeat(5, 1fr);
           grid-template-rows: repeat(4, auto);
           gap: 16px;
         }
