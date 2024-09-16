@@ -7,43 +7,33 @@ import React, {
 } from "react";
 import { useRouter } from "next/router";
 import { jwtDecode } from "jwt-decode";
-import axios from "axios";
-import baseurl from "@/app/API/getBackendURL";
+import { register as registerUser } from "@/app/API/auth/Register";
+import { login as loginUser } from "@/app/API/auth/Login";
+import { logout as logoutUser } from "@/app/API/auth/Logout";
+import { Login, Register } from "@/app/types/Auth";
 
 interface AuthContextType {
   user: any;
   isAuthenticated: boolean;
   loading: boolean;
   setUser: (user: any) => void;
-  login: (username: string, password: string) => void;
-  logout: () => void;
-  register: (
-    Name: string,
-    Email: string,
-    PhoneNo: number,
-    DOB: Date,
-    Password: string
-  ) => void;
+  login: (userData: Login) => Promise<void>;
+  logout: () => Promise<void>;
+  register: (userData: Register) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
   loading: true,
-  setUser: (user: any) => {},
-  login: (username: string, password: string) => {},
-  logout: () => {},
-  register: (
-    Name: string,
-    Email: string,
-    PhoneNo: number,
-    DOB: Date,
-    Password: string
-  ) => {},
+  setUser: () => {},
+  login: async () => {},
+  logout: async () => {},
+  register: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -62,52 +52,48 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } catch (error) {
         localStorage.removeItem("token");
         setUser(null);
-        console.error(error);
+        console.error("Token decoding failed:", error);
       }
     }
     setLoading(false);
   }, []);
 
-  const login = async (username: string, password: string) => {
+  const login = async (userData: Login) => {
     try {
-      // const response = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
-      const response = await axios.post(`${baseurl}/api/token/`, {
-        username,
-        password,
-      });
-      const { access, refresh } = response.data;
+      const res = await loginUser(userData);
+      const { access, refresh, user: userInfo } = res; // check later for backend response
       localStorage.setItem("token", access);
+      localStorage.setItem("refreshToken", refresh);
       setUser(jwtDecode(access));
       router.push("/");
     } catch (error) {
+      alert(`Login failed \n Error: ${error}`);
       console.error("Login failed", error);
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
-    router.push("/");
-  };
-
-  const register = async (
-    Name: string,
-    Email: string,
-    PhoneNo: number,
-    DOB: Date,
-    Password: string
-  ) => {
+  const logout = async () => {
     try {
-      // await axios.post('http://127.0.0.1:8000/api/register/', { username, password, email, first_name: firstName, last_name: lastName });
-      await axios.post(`${baseurl}/api/register/`, {
-        Name,
-        Email,
-        PhoneNo,
-        DOB,
-        Password,
-      });
+      await logoutUser();
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+      setUser(null);
       router.push("/");
     } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
+
+  const register = async (userData: Register) => {
+    try {
+      const res = await registerUser(userData);
+      const { access, refresh, user: userInfo } = res; // check later for backend response
+      localStorage.setItem("token", access);
+      localStorage.setItem("refreshToken", refresh);
+      setUser(jwtDecode(access));
+      router.push("/");
+    } catch (error) {
+      alert(`Registration failed \n Error: ${error}`);
       console.error("Register failed", error);
     }
   };
