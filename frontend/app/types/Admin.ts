@@ -1,19 +1,9 @@
 interface Admin {
-  openingTime: {
-    type: String;
-  };
-  closingTime: {
-    type: String;
-    // required: true,
-  };
-  capacity: {
-    type: Number;
-    //  required: true,
-  };
-  image: {
-    type: String;
-  };
-  otherInfo: {
-    type: String;
-  };
+  openingTime: String;
+  closingTime: String;
+  capacity: Number;
+  image: String;
+  otherInfo: String;
 }
+
+export type { Admin };
