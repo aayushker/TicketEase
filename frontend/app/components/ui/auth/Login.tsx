@@ -11,6 +11,7 @@ import {
   Input,
   Link,
 } from "@nextui-org/react";
+import { Login as LoginType } from "@/app/types/Auth";
 import { MailIcon } from "@/public/icons/MailIcon.jsx";
 import { LockIcon } from "@/public/icons/LockIcon.jsx";
 import { useAuth } from "@/app/AuthContext";
@@ -25,10 +26,16 @@ const Login: React.FC<SignInProps> = ({ isOpen, onClose }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const handleSignIn = (e: React.FormEvent) => {
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    login(email, password);
-    onClose();
+    const loginData: LoginType = { Email: email, Password: password };
+
+    try {
+      await login(loginData);
+      onClose();
+    } catch (error) {
+      console.error("Login failed", error);
+    }
   };
 
   return (
