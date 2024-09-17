@@ -1,3 +1,4 @@
+"use client";
 import React, {
   createContext,
   useState,
@@ -58,13 +59,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(false);
   }, []);
 
-  const login = async (userData: Login) => {
+  const login = async (userData: Login) => {console.log("login working");
     try {
       const res = await loginUser(userData);
-      const { access, refresh, user: userInfo } = res; // check later for backend response
-      localStorage.setItem("token", access);
-      localStorage.setItem("refreshToken", refresh);
-      setUser(jwtDecode(access));
+      
+      const {user, token } = res; // check later for backend response
+      localStorage.setItem("token", token);
+      // localStorage.setItem("refreshToken", refresh);
+      setUser(jwtDecode(token));
       router.push("/");
     } catch (error) {
       alert(`Login failed \n Error: ${error}`);
@@ -87,10 +89,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const register = async (userData: Register) => {
     try {
       const res = await registerUser(userData);
-      const { access, refresh, user: userInfo } = res; // check later for backend response
-      localStorage.setItem("token", access);
-      localStorage.setItem("refreshToken", refresh);
-      setUser(jwtDecode(access));
       router.push("/");
     } catch (error) {
       alert(`Registration failed \n Error: ${error}`);
