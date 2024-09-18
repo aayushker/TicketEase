@@ -11,6 +11,7 @@ import {
   Input,
   Link,
 } from "@nextui-org/react";
+import { Register as RegisterType } from "@/app/types/Auth";
 import { MailIcon } from "@/public/icons/MailIcon.jsx";
 import { LockIcon } from "@/public/icons/LockIcon.jsx";
 import { useAuth } from "@/app/AuthContext";
@@ -26,7 +27,7 @@ const Register: React.FC<SignUpProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     Name: "",
     Email: "",
-    PhoneNo: "",
+    PhoneNo: 0,
     DOB: "",
     Password: "",
     confirmPassword: "",
@@ -40,20 +41,25 @@ const Register: React.FC<SignUpProps> = ({ isOpen, onClose }) => {
     });
   };
 
-  const handleSignUp = (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.Password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-    register(
-      formData.Name,
-      formData.Email,
-      Number(formData.PhoneNo),
-      new Date(formData.DOB),
-      formData.Password
-    );
-    onClose(); // Close the modal after signing up
+    const registerData: RegisterType = {
+      Name: formData.Name,
+      Email: formData.Email,
+      PhoneNo: formData.PhoneNo,
+      DOB: formData.DOB,
+      Password: formData.Password,
+    };
+    try {
+      await register(registerData);
+      onClose();
+    } catch (error) {
+      console.log("Register failed", error);
+    }
   };
 
   return (
@@ -65,18 +71,18 @@ const Register: React.FC<SignUpProps> = ({ isOpen, onClose }) => {
             <form onSubmit={handleSignUp}>
               <Input
                 autoFocus
-                name="name"
-                // value={formData.Name}
+                name="Name"
+                value={formData.Name}
                 onChange={handleChange}
                 label="Name"
                 placeholder="Name"
                 variant="bordered"
                 type="text"
-                description={"Enter you name as per your official documents"}
+                description={"Enter your name as per your official documents"}
               />
               <Input
-                name="firstName"
-                // value={formData.Email}
+                name="Email"
+                value={formData.Email}
                 onChange={handleChange}
                 label="Email"
                 placeholder="Enter your Email"
@@ -86,8 +92,8 @@ const Register: React.FC<SignUpProps> = ({ isOpen, onClose }) => {
                 variant="bordered"
               />
               <Input
-                name="lastName"
-                // value={formData.PhoneNo.toString()}
+                name="PhoneNo"
+                value={formData.PhoneNo.toString()}
                 onChange={handleChange}
                 label="Phone Number"
                 type="number"
@@ -95,8 +101,8 @@ const Register: React.FC<SignUpProps> = ({ isOpen, onClose }) => {
                 variant="bordered"
               />
               <Input
-                name="email"
-                // value={formData.DOB.toString()}
+                name="DOB"
+                value={formData.DOB}
                 onChange={handleChange}
                 label="DOB"
                 type="date"
@@ -104,8 +110,8 @@ const Register: React.FC<SignUpProps> = ({ isOpen, onClose }) => {
                 variant="bordered"
               />
               <Input
-                name="password"
-                // value={formData.Password}
+                name="Password"
+                value={formData.Password}
                 onChange={handleChange}
                 endContent={
                   <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
@@ -117,7 +123,7 @@ const Register: React.FC<SignUpProps> = ({ isOpen, onClose }) => {
               />
               <Input
                 name="confirmPassword"
-                // value={formData.confirmPassword}
+                value={formData.confirmPassword}
                 onChange={handleChange}
                 endContent={
                   <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
