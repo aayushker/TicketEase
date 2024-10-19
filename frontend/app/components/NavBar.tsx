@@ -141,12 +141,12 @@ const NavBar: React.FC = () => {
                       Settings
                     </DropdownItem>
                     <DropdownItem
-                      key="Add Recipe"
+                      key="Book Ticket"
                       endContent={<IconPlus className="text-large" />}
-                      href="/addRecipe"
+                      href="/bookTicket"
                       color="success"
                     >
-                      <p className="text-success-600">Add Recipe</p>
+                      <p className="text-success-600">Book Ticket</p>
                     </DropdownItem>
                   </DropdownSection>
 
