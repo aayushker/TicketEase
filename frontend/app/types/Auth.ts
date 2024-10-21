@@ -7,7 +7,7 @@ interface Register {
   Name: string;
   Email: string;
   PhoneNo: number;
-  DOB: number;
+  DOB: string;
   Password: string;
 }
 
